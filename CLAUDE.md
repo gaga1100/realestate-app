@@ -74,6 +74,11 @@ VITE_SUPABASE_ANON_KEY=
 - RLS (Row Level Security) を全テーブルで有効化する
 - `profiles` テーブルは `auth.users` と1対1で紐づける
 
+## デプロイ情報
+
+- **本番URL**: https://vercel.com/gaga1100-s-projects/realestate-app
+- **Supabaseプロジェクト名**: realestate-app
+
 ## セキュリティ方針
 
 - 環境変数 (`.env`) は絶対にコミットしない
