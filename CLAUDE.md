@@ -4,24 +4,28 @@
 
 ## 技術スタック
 
-- **フロントエンド**: Next.js (App Router) + TypeScript
+- **フロントエンド**: React 18 + Vite + TypeScript
 - **スタイリング**: Tailwind CSS
-- **バックエンド/DB**: Supabase (PostgreSQL + Auth + Storage)
+- **バックエンド/DB**: Supabase (PostgreSQL + Auth)
 - **デプロイ**: Vercel
 
 ## プロジェクト構成
 
 ```
 realestate-app/
-├── app/                  # Next.js App Router
-│   ├── (auth)/           # 認証ページ群 (login, signup)
-│   ├── (dashboard)/      # 認証済みページ群
-│   └── layout.tsx
-├── components/           # 共通コンポーネント
-├── lib/
-│   └── supabase/         # Supabaseクライアント設定
-├── types/                # TypeScript型定義
-└── public/
+├── src/
+│   ├── components/       # 共通コンポーネント (ProtectedRoute 等)
+│   ├── context/          # React Context (AuthContext)
+│   ├── lib/              # Supabaseクライアント設定
+│   ├── pages/            # ページコンポーネント (Login, Signup, Dashboard)
+│   ├── types/            # TypeScript型定義
+│   ├── App.tsx           # ルーティング設定
+│   ├── main.tsx          # エントリーポイント
+│   └── index.css         # Tailwind ディレクティブ
+├── index.html
+├── vite.config.ts
+├── tsconfig.app.json
+└── tailwind.config.js
 ```
 
 ## Git 運用ルール
@@ -49,30 +53,29 @@ realestate-app/
 ## 開発コマンド
 
 ```bash
-npm run dev      # 開発サーバー起動 (http://localhost:3000)
-npm run build    # 本番ビルド
-npm run lint     # ESLint
+npm run dev        # 開発サーバー起動 (http://localhost:5173)
+npm run build      # 本番ビルド
+npm run lint       # ESLint
 npm run typecheck  # TypeScript型チェック
 ```
 
 ## 環境変数
 
-`.env.local` に設定 (コミットしない):
+`.env` に設定 (コミットしない — .gitignore で除外済み):
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
 ```
 
 ## Supabase 設定メモ
 
-- Auth: Email/Password + (任意) Google OAuth
+- Auth: Email/Password 認証
 - RLS (Row Level Security) を全テーブルで有効化する
 - `profiles` テーブルは `auth.users` と1対1で紐づける
 
 ## セキュリティ方針
 
-- 環境変数 (`.env.local`, `*.key`) は絶対にコミットしない
-- APIルートでは必ずSupabaseのセッション検証を行う
-- クライアント側では `anon key` のみ使用し、`service_role key` はサーバー側専用
+- 環境変数 (`.env`) は絶対にコミットしない
+- クライアント側では `anon key` (publishable key) のみ使用する
+- `service_role key` はサーバー側専用（このプロジェクトでは不使用）
