@@ -76,7 +76,7 @@ VITE_SUPABASE_ANON_KEY=
 
 ## デプロイ情報
 
-- **本番URL**: https://vercel.com/gaga1100-s-projects/realestate-app
+- **本番URL**: https://realestate-app-drab.vercel.app/
 - **Supabaseプロジェクト名**: realestate-app
 
 ## セキュリティ方針
